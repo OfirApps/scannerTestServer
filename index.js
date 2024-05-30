@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const { QuickDB } = require("quick.db");
 const db = new QuickDB(); // will make a json.sqlite in the root folder
+const PORT = process.env.PORT || 7145;
 
 const app = express();
 
@@ -66,5 +67,6 @@ app.get("/map/:z/:x/:y", async (req, res) => {
 
   });
 
-
-app.listen(7145);
+app.listen(PORT, () => {
+    console.log(`Express server listening on port ${PORT}`);
+});
