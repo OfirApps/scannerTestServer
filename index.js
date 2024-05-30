@@ -10,6 +10,11 @@ app.use(cors({
   origin: '*',
 }));
 
+app.get("/", async (req, res) => {
+  res.send("🎈🎈🎈")
+});
+
+
 app.get("/shapes/:busID", async (req, res) => {
   const busID = req.params.busID;
   const maslol = await db.get(busID);
