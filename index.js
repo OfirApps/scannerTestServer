@@ -24,20 +24,27 @@ app.get("/shapes/:busID", async (req, res) => {
     let response;
 
     // Try all combinations of route additions
+    extraadds = [0,1,2,3,4,5,6,7,8,9,"א","ב","ג","ד","ה","ו","ז","ח","#"]
     for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
-        routeAddition = `${i}-${j}`;
+      for (let j = 0; j < extraadds.length; j++) {
+        routeAddition = `${i}-${extraadds[j]}`;
+        console.log(routeAddition)
         response = await fetch(
           `https://www.markav.net/shapes/?q=${busID}-${routeAddition}`
         );
         //
-        const responseText = await response.text();
-        console.log(responseText)
+        var responseText = await response.text();
+        //console.log(responseText)
         if (response.ok) {
           // Found a valid route addition, save it to the database
-          res.send(responseText);
           await db.set(busID, responseText);
+          res.status(200).send(responseText);
+          console.log("OK");
+          j = 9999;
+          i = 9999;
           break;
+          
+          
         }
       }
     }
